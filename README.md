@@ -124,7 +124,6 @@ Bu proje MIT lisansı altında lisanslanmıştır.
 
 ## 🤝 İletişim
 
-* Web: www.yezuriemlak.com
-* E-posta: info@yezuriemlak.com
-* Telefon: +90 xxx xxx xx xx
+* Web: www.yezuri.com
+* E-posta: info@yezuri.com
 * Adres: İstanbul, Türkiye
