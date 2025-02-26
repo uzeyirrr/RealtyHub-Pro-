@@ -6,157 +6,118 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Builder;
 
 class Property extends Model
 {
     use HasFactory, SoftDeletes;
 
     protected $fillable = [
-        'office_id',
-        'agent_id',
         'title',
-        'slug',
-        'description',
         'type',
         'status',
         'price',
-        'currency',
-        'rooms',
-        'bathrooms',
-        'floor',
-        'total_floors',
-        'age',
-        'gross_sqm',
-        'net_sqm',
-        'heating_type',
-        'is_furnished',
-        'address',
-        'city',
-        'district',
-        'neighborhood',
-        'latitude',
-        'longitude',
-        'features',
+        'description',
+        'location',
+        'details',
         'media',
-        'video_url',
-        'virtual_tour_url',
-        'is_active',
-        'is_featured',
-        'featured_until',
-        'status_text',
-        'commission_rate',
-        'seo'
+        'stats',
+        'agent_id',
+        'office_id'
     ];
 
     protected $casts = [
-        'features' => 'array',
+        'location' => 'array',
+        'details' => 'array',
         'media' => 'array',
-        'seo' => 'array',
-        'is_furnished' => 'boolean',
+        'stats' => 'array',
         'is_active' => 'boolean',
         'is_featured' => 'boolean',
-        'featured_until' => 'datetime',
-        'price' => 'decimal:2',
-        'gross_sqm' => 'decimal:2',
-        'net_sqm' => 'decimal:2',
-        'commission_rate' => 'decimal:2'
     ];
 
-    // İlişkiler
-    public function office(): BelongsTo
-    {
-        return $this->belongsTo(RealEstateOffice::class, 'office_id');
-    }
+    protected $appends = [
+        'formatted_price',
+    ];
 
+    /**
+     * İlanın danışmanı
+     */
     public function agent(): BelongsTo
     {
         return $this->belongsTo(Agent::class);
     }
 
-    // Scope'lar
-    public function scopeActive($query)
+    /**
+     * İlanın bağlı olduğu ofis
+     */
+    public function office(): BelongsTo
+    {
+        return $this->belongsTo(RealEstateOffice::class);
+    }
+
+    /**
+     * Aktif ilanları filtreler
+     */
+    public function scopeActive(Builder $query): Builder
     {
         return $query->where('is_active', true);
     }
 
-    public function scopeFeatured($query)
+    /**
+     * Öne çıkan ilanları filtreler
+     */
+    public function scopeFeatured(Builder $query): Builder
     {
-        return $query->where('is_featured', true)
-                    ->where(function($q) {
-                        $q->whereNull('featured_until')
-                          ->orWhere('featured_until', '>', now());
-                    });
+        return $query->where('is_featured', true);
     }
 
-    public function scopeForSale($query)
-    {
-        return $query->where('status', 'sale');
-    }
-
-    public function scopeForRent($query)
-    {
-        return $query->where('status', 'rent');
-    }
-
-    public function scopeAvailable($query)
-    {
-        return $query->where('status_text', 'available');
-    }
-
-    public function scopeByType($query, $type)
-    {
-        return $query->where('type', $type);
-    }
-
-    public function scopeInPriceRange($query, $min, $max)
-    {
-        return $query->whereBetween('price', [$min, $max]);
-    }
-
-    public function scopeInCity($query, $city)
-    {
-        return $query->where('city', $city);
-    }
-
-    public function scopeInDistrict($query, $district)
-    {
-        return $query->where('district', $district);
-    }
-
-    // Yardımcı metodlar
-    public function getFullAddressAttribute(): string
-    {
-        return "{$this->address}, {$this->neighborhood}, {$this->district}/{$this->city}";
-    }
-
+    /**
+     * Fiyatı formatlar
+     */
     public function getFormattedPriceAttribute(): string
     {
-        return number_format($this->price, 2) . ' ' . $this->currency;
+        return number_format($this->price, 0, ',', '.') . ' ₺';
     }
 
-    public function getMainImageAttribute(): string
+    /**
+     * İstatistikleri günceller
+     */
+    public function incrementStats(string $key): void
     {
-        $media = json_decode($this->media, true);
-        return $media && isset($media[0]) ? asset("storage/{$media[0]}") : asset('images/default-property.png');
+        $stats = $this->stats ?? [
+            'view_count' => 0,
+            'favorite_count' => 0,
+        ];
+
+        $stats[$key] = ($stats[$key] ?? 0) + 1;
+        $this->stats = $stats;
+        $this->save();
     }
 
-    public function getPropertyUrlAttribute(): string
-    {
-        return route('properties.show', $this->slug);
-    }
-
+    /**
+     * İlanı görüntülenme sayısını artırır
+     */
     public function incrementViewCount(): void
     {
-        $this->increment('view_count');
+        $this->incrementStats('view_count');
     }
 
+    /**
+     * İlanın favori eklenme sayısını artırır
+     */
     public function incrementFavoriteCount(): void
     {
-        $this->increment('favorite_count');
+        $this->incrementStats('favorite_count');
     }
 
+    /**
+     * İlanın favori eklenme sayısını azaltır
+     */
     public function decrementFavoriteCount(): void
     {
-        $this->decrement('favorite_count');
+        $stats = $this->stats;
+        $stats['favorite_count'] = max(0, ($stats['favorite_count'] ?? 0) - 1);
+        $this->stats = $stats;
+        $this->save();
     }
 }

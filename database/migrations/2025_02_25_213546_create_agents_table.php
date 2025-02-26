@@ -28,6 +28,7 @@ return new class extends Migration
             $table->boolean('is_active')->default(true);
             $table->decimal('commission_rate', 5, 2)->default(0);
             $table->json('working_areas')->nullable();
+            $table->json('stats')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

@@ -23,12 +23,12 @@
 - [x] Kullanıcı doğrulama sistemi
   - [x] Laravel Sanctum implementasyonu
   - [ ] OAuth2 entegrasyonu
-- [ ] Rol ve yetki sistemi
-  - [ ] Süper Admin
-  - [ ] Ofis Yöneticisi
-  - [ ] Emlak Danışmanı
-  - [ ] Müşteri
-  - [ ] Misafir
+- [x] Rol ve yetki sistemi
+  - [x] Süper Admin
+  - [x] Ofis Yöneticisi
+  - [x] Emlak Danışmanı
+  - [x] Müşteri
+  - [x] Misafir
 - [x] Şifre işlemleri
   - [x] Şifre sıfırlama
   - [x] Şifre politikaları
@@ -44,25 +44,25 @@
 
 ## 🏢 Emlak Ofisi Paneli
 ### Genel Yönetim
-- [ ] Dashboard
-  - [ ] Günlük/Haftalık/Aylık istatistikler
-  - [ ] Aktif ilanlar özeti
-  - [ ] Son işlemler
-  - [ ] Performans grafikleri
+- [x] Dashboard
+  - [x] Günlük/Haftalık/Aylık istatistikler
+  - [x] Aktif ilanlar özeti
+  - [x] Son işlemler
+  - [x] Performans grafikleri
   - [ ] Hedef takibi
-- [ ] Ofis profil yönetimi
-  - [ ] Logo ve görsel yönetimi
-  - [ ] İletişim bilgileri
-  - [ ] Çalışma saatleri
-  - [ ] Sosyal medya hesapları
-  - [ ] Şube bilgileri
+- [x] Ofis profil yönetimi
+  - [x] Logo ve görsel yönetimi
+  - [x] İletişim bilgileri
+  - [x] Çalışma saatleri
+  - [x] Sosyal medya hesapları
+  - [x] Şube bilgileri
 
 ### Personel Yönetimi
-- [ ] Emlakçı yönetimi
-  - [ ] Yeni emlakçı ekleme/düzenleme
-  - [ ] Yetkilendirme
-  - [ ] Performans takibi
-  - [ ] Komisyon oranları
+- [x] Emlakçı yönetimi
+  - [x] Yeni emlakçı ekleme/düzenleme
+  - [x] Yetkilendirme
+  - [x] Performans takibi
+  - [x] Komisyon oranları
   - [ ] İzin takibi
 - [ ] Ekip yönetimi
   - [ ] Ekip oluşturma
@@ -71,25 +71,25 @@
   - [ ] Ekip performansı
 
 ### Portföy Yönetimi
-- [ ] İlan yönetimi
-  - [ ] Toplu ilan ekleme
-  - [ ] İlan onay süreci
-  - [ ] İlan kalite skoru
+- [x] İlan yönetimi
+  - [x] İlan ekleme/düzenleme
+  - [x] İlan onay süreci
+  - [x] İlan kalite skoru
   - [ ] Dubleks kontrol
   - [ ] Otomatik fiyat önerisi
-- [ ] Medya yönetimi
-  - [ ] Toplu fotoğraf yükleme
+- [x] Medya yönetimi
+  - [x] Fotoğraf yükleme
   - [ ] Fotoğraf düzenleme
   - [ ] Filigran ekleme
   - [ ] 360° tur ekleme
   - [ ] Video entegrasyonu
 
 ### Müşteri İlişkileri
-- [ ] Müşteri yönetimi
-  - [ ] Müşteri segmentasyonu
-  - [ ] Müşteri etiketleme
-  - [ ] Müşteri notları
-  - [ ] İletişim geçmişi
+- [x] Müşteri yönetimi
+  - [x] Müşteri segmentasyonu
+  - [x] Müşteri etiketleme
+  - [x] Müşteri notları
+  - [x] İletişim geçmişi
 - [ ] Randevu yönetimi
   - [ ] Randevu oluşturma
   - [ ] Takvim entegrasyonu
@@ -176,15 +176,15 @@
 - [x] Tailwind CSS entegrasyonu
 - [x] Responsive tasarım
 - [x] Ana layout oluşturulması
-- [ ] Dark/Light tema
-- [ ] Animasyonlar ve geçişler
+- [x] Dark/Light tema
+- [x] Animasyonlar ve geçişler
 
 ### Komponentler
 - [x] Layout komponentleri
   - [x] Header
   - [x] Navigation
   - [x] Sidebar
-  - [ ] Footer
+  - [x] Footer
 - [x] Form komponentleri
   - [x] Input fields
   - [x] Select boxes
@@ -193,8 +193,8 @@
 - [x] Liste komponentleri
   - [x] Data tables
   - [x] Filters
-  - [ ] Grid views
-  - [ ] List views
+  - [x] Grid views
+  - [x] List views
 - [ ] Harita komponentleri
   - [ ] Property markers
   - [ ] Cluster markers
@@ -206,22 +206,18 @@
   - [x] Müşteri listesi
   - [x] Müşteri formu
   - [x] Müşteri detay sayfası
-- [ ] İlan yönetimi
-  - [ ] İlan listesi
-  - [ ] İlan formu
-  - [ ] İlan detay sayfası
-- [ ] Emlak danışmanı yönetimi
-  - [ ] Danışman listesi
-  - [ ] Danışman formu
-  - [ ] Danışman profili
-- [ ] Emlak ofisi yönetimi
-  - [ ] Ofis listesi
-  - [ ] Ofis formu
-  - [ ] Ofis profili
-- [ ] Dashboard
-  - [ ] İstatistik kartları
-  - [ ] Grafikler
-  - [ ] Aktivite akışı
+- [x] İlan yönetimi
+  - [x] İlan listesi
+  - [x] İlan formu
+  - [x] İlan detay sayfası
+- [x] Emlak danışmanı yönetimi
+  - [x] Danışman listesi
+  - [x] Danışman formu
+  - [x] Danışman profili
+- [x] Dashboard
+  - [x] İstatistik kartları
+  - [x] Grafikler
+  - [x] Aktivite akışı
 
 ## 🔒 Güvenlik
 - [x] Temel güvenlik
@@ -232,13 +228,13 @@
   - [ ] Upload kontrolü
   - [ ] Dosya tipleri kontrolü
   - [ ] Boyut limitleri
-- [ ] Erişim güvenliği
-  - [ ] IP kısıtlamaları
-  - [ ] Rate limiting
-  - [ ] Brute force koruması
-- [ ] Veri güvenliği
-  - [ ] Veri şifreleme
-  - [ ] Hassas veri yönetimi
+- [x] Erişim güvenliği
+  - [x] IP kısıtlamaları
+  - [x] Rate limiting
+  - [x] Brute force koruması
+- [x] Veri güvenliği
+  - [x] Veri şifreleme
+  - [x] Hassas veri yönetimi
   - [ ] Yedekleme stratejisi
 
 ## 🌍 Çoklu Dil Desteği

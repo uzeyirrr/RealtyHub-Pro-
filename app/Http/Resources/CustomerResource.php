@@ -8,7 +8,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
 class CustomerResource extends JsonResource
 {
     /**
-     * Transform the resource into an array.
+     * Kaynağı bir array'e dönüştür.
      *
      * @return array<string, mixed>
      */
@@ -21,8 +21,20 @@ class CustomerResource extends JsonResource
                 'name' => $this->user->name,
                 'email' => $this->user->email,
             ],
-            'agent' => $this->when($this->agent_id, new AgentResource($this->agent)),
-            'office' => $this->when($this->office_id, new RealEstateOfficeResource($this->office)),
+            'agent' => $this->when($this->agent_id, function () {
+                return [
+                    'id' => $this->agent->id,
+                    'name' => $this->agent->user->name,
+                    'title' => $this->agent->title,
+                    'photo_url' => $this->agent->photo_url,
+                ];
+            }),
+            'office' => $this->when($this->office_id, function () {
+                return [
+                    'id' => $this->office->id,
+                    'name' => $this->office->name,
+                ];
+            }),
             'contact' => [
                 'phone' => $this->phone,
                 'alternate_phone' => $this->alternate_phone,
@@ -37,11 +49,15 @@ class CustomerResource extends JsonResource
                 'tax_office' => $this->tax_office,
                 'company_name' => $this->company_name,
             ],
-            'preferences' => $this->preferences,
+            'preferences' => $this->preferences ?? [],
             'activity' => [
-                'search_history' => $this->search_history,
-                'viewed_properties' => $this->viewed_properties,
-                'favorite_properties' => $this->favorite_properties,
+                'search_history' => $this->search_history ?? [],
+                'viewed_properties' => $this->when($this->relationLoaded('viewedProperties'), function () {
+                    return PropertyResource::collection($this->viewedProperties);
+                }, $this->viewed_properties ?? []),
+                'favorite_properties' => $this->when($this->relationLoaded('favoriteProperties'), function () {
+                    return PropertyResource::collection($this->favoriteProperties);
+                }, $this->favorite_properties ?? []),
             ],
             'lead_info' => [
                 'lead_source' => $this->lead_source,
@@ -51,8 +67,8 @@ class CustomerResource extends JsonResource
                 'next_followup' => $this->next_followup?->format('Y-m-d H:i:s'),
             ],
             'is_active' => $this->is_active,
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
+            'created_at' => $this->created_at->format('Y-m-d H:i:s'),
+            'updated_at' => $this->updated_at->format('Y-m-d H:i:s'),
         ];
     }
 }
